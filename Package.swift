@@ -5,19 +5,36 @@ import PackageDescription
 
 let package = Package(
     name: "ImgSize",
+	platforms: [.macOS(.v13), .iOS(.v16)],
     products: [
         // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(
             name: "ImgSize",
             targets: ["ImgSize"]),
+		.library(
+			name: "CPP",
+			targets: ["CPP"]
+		)
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
         // Targets can depend on other targets in this package and products from dependencies.
         .target(
-            name: "ImgSize"),
+			name: "ImgSize",
+			dependencies: ["CPP"],
+			publicHeadersPath: "include",
+			cxxSettings: [
+				.headerSearchPath("Sources")
+			]
+		),
         .testTarget(
             name: "ImgSizeTests",
-            dependencies: ["ImgSize"]),
+            dependencies: ["ImgSize"],
+			resources: [.copy("Resources")]
+		),
+		.target(
+			name: "CPP"
+		)
+		
     ]
 )

@@ -13,6 +13,10 @@ public struct SImgSize {
 	public var sizes : [(w : UInt32, h: UInt32)]
 }
 
+/// Return dimensions of passed image file without loading the file into memory.
+/// Only supports png, gif & jpeg.
+/// - Parameter imgFile: path to image file
+/// - Returns: Image size and image type or nil if image type is unknown or there is an error reading the file.
 public func GetImageSize(for imgFile: String) -> SImgSize? {
 	var isl : CPP.ImgSizeList! = ImgSizeList()
 	let res = GetImageSizeC(imgFile, &isl)
